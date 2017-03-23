@@ -10,6 +10,7 @@ module.exports = {
 	entry: [
 		path.resolve(__dirname, './MvcApp2017/Scripts/app/main.js')
 	],
+
 	output: {
 		path: path.resolve(__dirname, './MvcApp2017/dist'),
 		//filename: '[hash].bundle.js',
@@ -33,7 +34,7 @@ module.exports = {
 			// https://github.com/webpack-contrib/url-loader
 			// http://stackoverflow.com/questions/31180570/webpack-can-not-load-font-file-unexpected-token
 			{
-				test: /\.(png|jpg)$/,
+				test: /\.(png|jpg|gif)$/,
 				use: [
 					{
 						loader: 'url-loader',

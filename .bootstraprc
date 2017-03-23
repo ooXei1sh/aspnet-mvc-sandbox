@@ -53,6 +53,15 @@
 
 	"scripts": {
 		"alert": true,
-		"button": true
+		"button": true,
+		"carousel": true,
+		"collapse": true,
+		"dropdown": true,
+		"modal": true,
+		"popover": true,
+		"scrollspy": true,
+		"tab": true,
+		"tooltip": true,
+		"util": true
 	}
 }

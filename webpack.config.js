@@ -1,55 +1,66 @@
-var path = require('path');
-var webpack = require('webpack');
+const path = require('path');
+const webpack = require('webpack');
+
 const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const extractCssPlugin = new ExtractTextPlugin("[name].style.css");
+//const extractCssPlugin = new ExtractTextPlugin("[contenthash].style.css");
 
 // https://webpack.js.org/configuration
-// https://github.com/colindresj/sample-webpack-config
-// https://github.com/kriasoft/aspnet-starter-kit
-// http://blog.andrewray.me/webpack-when-to-use-and-why/
 module.exports = {
 	entry: [
-		'bootstrap-loader',
-		'./MvcApp2017/Scripts/app/main.js',
+		path.resolve(__dirname, './MvcApp2017/Scripts/app/main.js')
 	],
 	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, './MvcApp2017/dist')
+		path: path.resolve(__dirname, './MvcApp2017/dist'),
+		//filename: '[hash].bundle.js',
+		filename: '[name].bundle.js',
+		publicPath: '/dist/',
 	},
+
+	// fail out on the first error instead of tolerating it.
+	bail: true,
+
 	module: {
-		loaders: [
-			{ test: /kendo\-ui\-core[\///].*\.js$/, loader: "imports?jQuery=jquery" },
-			//{
-			//	test: /\.(jpe?g|png|gif|svg)$/i,
-			//	loaders: [
-			//		'file-loader?hash=sha512&digest=hex&name=[hash].[ext]',
-			//		'image-webpack-loader?bypassOnDebug&optimizationLevel=7&interlaced=false'
-			//	]
-			//},
-			//{
-			//	test: /\.sass$/,
-			//	exclude: /node_modules/,
-			//	loader: ExtractTextPlugin.extract({ fallback: 'style-loader', use: 'css!sass?indentedSyntax=true&sourceMap=true'})
-			//},
-		],
 		rules: [
+			//{
+			//	test: /\.(css|scss)$/,
+			//	use: extractCssPlugin.extract({
+			//		fallback: "style-loader",
+			//		use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
+			//	})
+			//},
+
+			// https://github.com/webpack-contrib/url-loader
+			// http://stackoverflow.com/questions/31180570/webpack-can-not-load-font-file-unexpected-token
 			{
-				test: /\.css$/,
-				use: ExtractTextPlugin.extract({
-					fallback: "style-loader",
-					use: ["style-loader","css-loader","sass-loader"]
-				})
+				test: /\.(png|jpg)$/,
+				use: [
+					{
+						loader: 'url-loader',
+						options: {
+							limit: 10000
+						}
+					}
+				],
+			},
+
+			// https://github.com/shakacode/bootstrap-loader/blob/master/examples/basic/webpack.dev.config.js#L45
+			{ test: /\.css$/, use: ['style-loader', 'css-loader', 'postcss-loader'] },
+			{ test: /\.scss$/, use: ['style-loader', 'css-loader', 'postcss-loader', 'sass-loader'] },
+			{
+				test: /\.woff2?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
+				use: 'url-loader?limit=10000',
 			},
 			{
-				test: /\.(png|jpg|gif|svg|eot|ttf|woff|woff2)$/,
-				loader: 'url-loader',
-				options: {
-					limit: 10000
-				}
-			}
-		]
+				test: /\.(ttf|eot|svg)(\?[\s\S]+)?$/,
+				use: 'file-loader',
+			},
+		],
 	},
+
+	// https://webpack.js.org/configuration/plugins/
 	plugins: [
-		new ExtractTextPlugin("./MvcApp2017/Content/styles.css"),
+		//extractCssPlugin,
 		new webpack.ProvidePlugin({
 			$: "jquery",
 			jQuery: "jquery",

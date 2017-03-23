@@ -1,0 +1,12 @@
+﻿$link-font-stack: Helvetica, sans-serif;
+$link-primary-color: rgba(70, 0, 130, 1);
+
+a {
+	font: 100% $link-font-stack;
+	color: $link-primary-color;
+	text-decoration: none;
+}
+
+ul {
+	list-style-type: none;
+}

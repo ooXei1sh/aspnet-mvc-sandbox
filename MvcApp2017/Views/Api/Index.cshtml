@@ -1,0 +1,12 @@
+﻿<div id="my_mvvm_container">
+	<h1 data-bind="text: dataSource.view()[0].FruitName"></h1>
+
+	<form>
+		<input data-role="dropdownlist"
+			data-auto-bind="true"
+			data-text-field="Text"
+			data-value-field="Value"
+			data-bind="value: selectedFruit, source: fruits, events: { change: onChange }"
+			style="width: 100%;" />
+	</form>
+</div>

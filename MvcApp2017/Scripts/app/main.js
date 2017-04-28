@@ -9,21 +9,15 @@ require('../../Content/style.scss');
 
 var _ = require('underscore');
 
-var kendo = require("kendo-ui-webpack/kendo");
+// http://docs.telerik.com/kendo-ui/third-party/webpack
+import 'kendo-ui-core';
+require('./api');
 
 // https://github.com/webpack/webpack/issues/108#issuecomment-26287856
 //window.jQuery = window.$ = require("jquery");
 
-(function ($, _) {
-
-	var obj = new kendo.Observable();
-	console.log(obj);
-
+(function () {
 	$(function () {
-		console.log('doc ready!');
-
-		_.each([1, 2, 3], function (i) {
-			console.log(i);
-		});
+		console.log('main.js');
 	});
-})($, _);
+})();
